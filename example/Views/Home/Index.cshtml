@@ -1,31 +1,176 @@
-﻿@{
+﻿@model IEnumerable<example.Models.Album>
+@{
     ViewBag.Title = "List of Albums";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<br>
+<br>
+<center>
+    <h1>ALBUM LIST</h1>
+</center>
+<center>
+    <div>
+
+        <table class="table table-striped table-dark table-fixed">
+            <thead>
+                <tr>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Album Name</th>
+                    <th scope="col">Artist</th>
+                    <th scope="col">Release Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                @*<?php foreach($albums as $album): ?>
+                <tr id="<?php echo $album->id?>">
+                    <th scope="row">
+                        <a href="<?php echo base_url('albums/edit/').$album->id?>"><img src="<?php echo base_url('assets/album/').$album->album_cover ?>" width="50px" height="50px" /></a>
+                    </th>
+                    <td>
+                        <a href="<?php echo base_url('albums/edit/').$album->id?>">
+                            <?php echo $album->album_name; ?>
+                        </a>
+                    </td>
+                    <td>
+                        <?php echo $album->album_artist; ?>
+                    </td>
+                    <td>
+                        <?php echo $album->released_year; ?>
+                    </td>
+                    <td>
+                        <a href="<?php echo base_url('albums/viewRviews/').$album->id?>" class="btn btn-warning">View Reviews</a>
+                        <button class="btn btn-danger delete" value="<?php echo $album->id?>">Remove Album</button>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-album="<?php echo $album->album_artist; ?>" data-whatever="<?php echo $album->id?>">Review <?php echo $album->album_name; ?></button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>*@
+
+                @foreach(var item in Model)
+                {
+                <tr id="@item.id">
+
+                    <th scope="row">
+                        <a href=" "><img src="@Url.Content("albums/edit/"+item.albumPicture)" width="50px" height="50px" /></a>
+                    </th>
+                    <td>
+                        <a @*href="<?php echo base_url('albums/edit/').$album->id?>"*@>
+                            @item.albumName
+                        </a>
+                    </td>
+                    <td>
+                        @item.albumArtist
+                    </td>
+                    <td>
+                        @item.albumYear.ToString("yyyy")
+                    </td>
+                    <td>
+                        <a href="<?php echo base_url('albums/viewRviews/').$album->id?>" class="btn btn-warning">View Reviews</a>
+                        <button class="btn btn-danger delete" value="@item.id">Remove Album</button>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-album="@item.albumArtist" data-whatever="@item.id">Review @item.albumName</button>
+                    </td>
+                </tr>
+                }
+        </table>
+
+
+    </div>
+
+</center>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Review Album</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form id="review_form" method="post" action="">
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">full Name:</label>
+                        <input required type="text" name="" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="review" class="col-form-label">Review:</label>
+                        <textarea required name="review" class="form-control" id="review-text"></textarea>
+                    </div>
+                </form>
+                <div style="display: none" class="alert alert-success" id='message'></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary review">Add Review</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<script>
+	$( document ).ready( function () {
+		$( '.delete' ).click( function ( event ) {
+			event.preventDefault();
+
+			var album = '#' + $( this ).val();
+			console.log( album );
+			$.ajax( {
+				type: 'POST',
+				url:  '@Url.Content("albums/delete")',
+				dataType: 'json',
+				data: {
+					albumid: $( this ).val()
+				},
+				success: function ( data ) {
+					console.log( data );
+
+				}
+			} );
+			$( album ).hide( 'slow', function () {
+				$( album ).remove();
+			} );
+
+		} );
+var ur="";
+		$( '#exampleModal' ).on( 'show.bs.modal', function ( event ) {
+			var button = $( event.relatedTarget ) // Button that triggered the modal
+			var id = button.data( 'whatever' ) // Extract info from data-* attributes
+			var album = button.data( 'album' )
+				// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+				// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			//$( '#review' ).attr( 'action', '<?php echo base_url('albums/post_review/')?>' + id );
+			ur='@Url.Content("albums/post_review/")' + id
+			var modal = $( this )
+				modal.find('.modal-title').text('Review ' + album)
+				// modal.find('.modal-body input').val(recipient)
+		} )
+		$( '.review' ).click( function ( event ) {
+			event.preventDefault();
+			//var name =$('#name').val();
+			//var review=$('#review-text').val();
+			$.ajax( {
+				url:ur,
+				type: $( '#review_form' ).attr( "method" ),
+				dataType: 'json',
+				data: {
+					name:$('#name').val(),
+					review:$('#review-text').val()
+				},
+				success: function ( data ) {
+					$( '#message' ).html( data.review );
+					$( '#message' ).show();
+					$( '#message' ).fadeOut( 5000 );
+					$( "#review_form" )[ 0 ].reset();
+					console.log( data.review );
+
+				}
+			} );
+
+
+		} );
+
+
+	} );
+</script>

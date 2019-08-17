@@ -1,4 +1,5 @@
-﻿using System;
+﻿using example.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,11 @@ namespace example.Controllers
 {
     public class HomeController : Controller
     {
+        private  AlbumContext db= new AlbumContext();
+    
         public ActionResult Index()
         {
-            return View();
+            return View(db.albums.ToList());
         }
 
         public ActionResult Edit()
