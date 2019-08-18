@@ -1,0 +1,43 @@
+﻿@model IEnumerable<example.ViewModel.viewReviewsModel>
+@{
+    example.ViewModel.viewReviewsModel viewReviews = Model.ToList()[0];
+    ViewBag.Title = "Reviews";
+    String imagePath = "~/content/img/"+ viewReviews.album.albumPicture;
+    String AlbumName = viewReviews.album.albumName;
+}
+
+<br>
+<br>
+<center>
+    <h1>Reviews for @AlbumName  </h1>
+</center>
+
+<center>
+    <div class="review">
+        <img src="@Url.Content(imagePath)" width="200px" height="200px" />
+        <br>
+        <br>
+        <div>
+             @foreach(var  item in Model){ 
+            <div class="card">
+
+                <div class="card-header">@item.Reviews.name</div>
+
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+
+                        <footer class="blockquote-footer"><cite title="Source title">@item.Reviews.review</cite></footer>
+
+                    </blockquote>
+
+                </div>
+
+
+            </div>
+            <br>
+            }
+
+
+        </div>
+    </div>
+</center>

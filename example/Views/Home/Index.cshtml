@@ -21,58 +21,37 @@
                 </tr>
             </thead>
             <tbody>
-                @*<?php foreach($albums as $album): ?>
-                <tr id="<?php echo $album->id?>">
-                    <th scope="row">
-                        <a href="<?php echo base_url('albums/edit/').$album->id?>"><img src="<?php echo base_url('assets/album/').$album->album_cover ?>" width="50px" height="50px" /></a>
-                    </th>
-                    <td>
-                        <a href="<?php echo base_url('albums/edit/').$album->id?>">
-                            <?php echo $album->album_name; ?>
-                        </a>
-                    </td>
-                    <td>
-                        <?php echo $album->album_artist; ?>
-                    </td>
-                    <td>
-                        <?php echo $album->released_year; ?>
-                    </td>
-                    <td>
-                        <a href="<?php echo base_url('albums/viewRviews/').$album->id?>" class="btn btn-warning">View Reviews</a>
-                        <button class="btn btn-danger delete" value="<?php echo $album->id?>">Remove Album</button>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-album="<?php echo $album->album_artist; ?>" data-whatever="<?php echo $album->id?>">Review <?php echo $album->album_name; ?></button>
-                    </td>
-                </tr>
-                <?php endforeach; ?>*@
-
-                @foreach(var item in Model)
+                @foreach (var item in Model)
                 {
-                <tr id="@item.id">
+                    
+                        String imagePath = "~/content/img/"+item.albumPicture;
+                    
+                    <tr id="@item.id">
 
-                    <th scope="row">
-                        <a href=" "><img src="@Url.Content("albums/edit/"+item.albumPicture)" width="50px" height="50px" /></a>
-                    </th>
-                    <td>
-                        <a @*href="<?php echo base_url('albums/edit/').$album->id?>"*@>
-                            @item.albumName
-                        </a>
-                    </td>
-                    <td>
-                        @item.albumArtist
-                    </td>
-                    <td>
-                        @item.albumYear.ToString("yyyy")
-                    </td>
-                    <td>
-                        <a href="<?php echo base_url('albums/viewRviews/').$album->id?>" class="btn btn-warning">View Reviews</a>
-                        <button class="btn btn-danger delete" value="@item.id">Remove Album</button>
+                        <th scope="row">
+                            <a href="@Url.Action("Edit","Home",new{id=item.id},null)"><img src="@Url.Content(imagePath)" width="50px" height="50px" /></a>
+                        </th>
+                        <td>
+                            <a href="@Url.Action("Edit","Home",new{id=item.id},null)">
+                                @item.albumName
+                            </a>
+                        </td>
+                        <td>
+                            @item.albumArtist
+                        </td>
+                        <td>
+                            @item.albumYear.ToString("yyyy")
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Reviews","Home",new{id=item.id},null)" class="btn btn-warning">View Reviews</a>
+                            <button class="btn btn-danger delete" value="@item.id">Remove Album</button>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-album="@item.albumArtist" data-whatever="@item.id">Review @item.albumName</button>
-                    </td>
-                </tr>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-album="@item.albumArtist" data-whatever="@item.id">Review @item.albumName</button>
+                        </td>
+                    </tr>
                 }
-        </table>
+</table>
 
 
     </div>
@@ -110,7 +89,12 @@
 </div>
 
 <script>
-	$( document ).ready( function () {
+    $(document).ready(function () {
+        var id=""
+          function change(ure) {
+                ur = '@Url.Action("AddReview","Home",new{id="-1"},null)'
+              return  ur.replace("-1", ure)
+            }
 		$( '.delete' ).click( function ( event ) {
 			event.preventDefault();
 
@@ -133,15 +117,17 @@
 			} );
 
 		} );
-var ur="";
+
 		$( '#exampleModal' ).on( 'show.bs.modal', function ( event ) {
 			var button = $( event.relatedTarget ) // Button that triggered the modal
-			var id = button.data( 'whatever' ) // Extract info from data-* attributes
+			 id = button.data( 'whatever' ) // Extract info from data-* attributes
 			var album = button.data( 'album' )
 				// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 				// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-			//$( '#review' ).attr( 'action', '<?php echo base_url('albums/post_review/')?>' + id );
-			ur='@Url.Content("albums/post_review/")' + id
+            //$( '#review' ).attr( 'action', '<?php echo base_url('albums/post_review/')?>' + id );
+            console.log()
+
+          
 			var modal = $( this )
 				modal.find('.modal-title').text('Review ' + album)
 				// modal.find('.modal-body input').val(recipient)
@@ -151,12 +137,13 @@ var ur="";
 			//var name =$('#name').val();
 			//var review=$('#review-text').val();
 			$.ajax( {
-				url:ur,
+				url:'@Url.Action("AddReview","Home")',
 				type: $( '#review_form' ).attr( "method" ),
 				dataType: 'json',
 				data: {
 					name:$('#name').val(),
-					review:$('#review-text').val()
+                    review: $('#review-text').val(),
+                    id: id
 				},
 				success: function ( data ) {
 					$( '#message' ).html( data.review );

@@ -22,54 +22,54 @@ namespace example.Migrations
             //  to avoid creating duplicate seed data.
 
 
-            var album1 = new Album
-            {
-                albumArtist = " Frank Casino",
-                albumName = "IM hungry",
-                albumPicture = "frank.png",
-                albumYear = DateTime.Now,
-                date_created = DateTime.Now,
-                id= Guid.NewGuid(),
-                isActive = true
-            };
-            var album2 = new Album
-            {
-                albumArtist = "Drake",
-                albumName = "Its too late",
-                albumPicture = "Drake.png",
-                albumYear = DateTime.Now,
-                date_created = DateTime.Now,
-                id = Guid.NewGuid(),
-                isActive=true
-            };
+            //var album1 = new Album
+            //{
+            //    albumArtist = " Frank Casino",
+            //    albumName = "IM hungry",
+            //    albumPicture = "frank.png",
+            //    albumYear = DateTime.Now,
+            //    date_created = DateTime.Now,
+            //    id = Guid.NewGuid(),
+            //    isActive = true
+            //};
+            //var album2 = new Album
+            //{
+            //    albumArtist = "Drake",
+            //    albumName = "Its too late",
+            //    albumPicture = "Drake.png",
+            //    albumYear = DateTime.Now,
+            //    date_created = DateTime.Now,
+            //    id = Guid.NewGuid(),
+            //    isActive = true
+            //};
 
-           // context.albums.Add(album1);
+            // context.albums.Add(album1);
             //context.albums.Add(album2);
             //context.SaveChanges();
 
-            var rew = new reviews
-            {
-                id=Guid.NewGuid(),
-                albumID=Guid.Parse( "cdee176e-c360-4f0c-97a4-2a7e0bf2f4e3"),
-                name="Godfrey",
-                isActive=true,
-                date_created=DateTime.Now,
-                review="this album is wack"
+            //var rew = new reviews
+            //{
+            //    id = Guid.NewGuid(),
+            //    albumID = Guid.Parse("cdee176e-c360-4f0c-97a4-2a7e0bf2f4e3"),
+            //    name = "Godfrey",
+            //    isActive = true,
+            //    date_created = DateTime.Now,
+            //    review = "this album is wack"
 
-            };
-            var rew1 = new reviews
-            {
-                id = Guid.NewGuid(),
-                albumID = Guid.Parse("3e475ea0-dfd3-489a-aaf4-9a12a4dfe1b8"),
-                name = "Godfrey",
-                isActive = true,
-                date_created = DateTime.Now,
-                review = "this album is wack"
+            //};
+            //var rew1 = new reviews
+            //{
+            //    id = Guid.NewGuid(),
+            //    albumID = Guid.Parse("3e475ea0-dfd3-489a-aaf4-9a12a4dfe1b8"),
+            //    name = "Godfrey",
+            //    isActive = true,
+            //    date_created = DateTime.Now,
+            //    review = "this album is wack"
 
-            };
-            context.reviews.Add(rew);
-            context.reviews.Add(rew1);
-            context.SaveChanges();
+            //};
+            //context.reviews.Add(rew);
+            //context.reviews.Add(rew1);
+            //context.SaveChanges();
         }
     }
 }

@@ -142,16 +142,27 @@
     <Compile Include="Migrations\201908162253147_InitialCreate3.Designer.cs">
       <DependentUpon>201908162253147_InitialCreate3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908181503414_236.cs" />
+    <Compile Include="Migrations\201908181503414_236.Designer.cs">
+      <DependentUpon>201908181503414_236.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908181517374_237.cs" />
+    <Compile Include="Migrations\201908181517374_237.Designer.cs">
+      <DependentUpon>201908181517374_237.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumContext.cs" />
     <Compile Include="Models\baseTable.cs" />
     <Compile Include="Models\reviews.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\viewReviewsModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\drake.png" />
+    <Content Include="Content\img\frank.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -215,6 +226,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\Reviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -240,6 +252,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908162253147_InitialCreate3.resx">
       <DependentUpon>201908162253147_InitialCreate3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908181503414_236.resx">
+      <DependentUpon>201908181503414_236.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908181517374_237.resx">
+      <DependentUpon>201908181517374_237.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
